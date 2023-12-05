@@ -3,7 +3,7 @@ import os
 
 # Setting the API key
 #openai.api_key = os.environ['OPENAI_API_KEY']
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+#os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 #import openai
 # Uncomment the following lines to enable the API key input form
 # Initialize
@@ -12,7 +12,7 @@ st.cache_data.clear()
 if "openai_api_key" not in st.session_state:
     st.session_state.openai_api_key = ""
 
-#openai.api_key = st.session_state.openai_api_key
+openai.api_key = st.session_state.openai_api_key
 #openai.api_key = 'YOUR_OPENAI_API_KEY'
 
 if "text_error" not in st.session_state:

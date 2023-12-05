@@ -1,3 +1,5 @@
-streamlit==0.84.0
-openai==0.27.0
-pandas==1.3.3
+streamlit == 1.28.0
+pandas
+streamlit-analytics
+numpy
+Import openai
