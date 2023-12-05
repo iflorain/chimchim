@@ -1,5 +1,7 @@
 import streamlit as st
+from streamlit import secrets
 
+openai.api_key = secrets["openai_api_key"]
 
 
 def generate_cuisine_recommendation(cuisine, meal_type, flavor_preferred):
