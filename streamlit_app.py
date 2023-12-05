@@ -1,4 +1,3 @@
-from openai import OpenAI
 import streamlit as st
 #import openai
 # Uncomment the following lines to enable the API key input form
@@ -8,8 +7,8 @@ st.cache_data.clear()
 if "openai_api_key" not in st.session_state:
     st.session_state.openai_api_key = ""
 
-OpenAI.api_key = st.session_state.openai_api_key
-#openai.api_key = 'YOUR_OPENAI_API_KEY'
+#openai.api_key = st.session_state.openai_api_key
+openai.api_key = 'YOUR_OPENAI_API_KEY'
 
 if "text_error" not in st.session_state:
     st.session_state.text_error = None
@@ -33,7 +32,7 @@ with st.sidebar:
 #user_api_key = st.sidebar.text_input("OpenAI API key", type="password")
 #client = openai.OpenAI(api_key=user_api_key)
 
-def generate_flower_recommendation(cuisine, meal_type, flavor_preferred):
+def generate_cuisine_recommendation(cuisine, meal_type, flavor_preferred):
     # Customize the prompt based on your requirements
     prompt = f"I feel like having {meal_type} {cuisine} food with a {flavor_preferred} flavor. What dish do you recommend?. and write 3 notes for me why I chose this cuisine for this {meal_type}."
 
@@ -51,24 +50,23 @@ def generate_flower_recommendation(cuisine, meal_type, flavor_preferred):
     
     return response.choices[0].message.content
 
-#st.title("🌼Flower For Your Important Person🌼")
-st.markdown("<h2 style = 'font-size: 1.8rem'>🌼Flower For Your Important Person🌼</h2>",unsafe_allow_html=True)
+#st.title("Dish For Today")
+st.markdown("<h2 style = 'font-size: 1.8rem'>Dish For Today</h2>",unsafe_allow_html=True)
 
 # Uncomment the following lines to enable the API key input form
 
 
 # User input
-occasion = st.text_input("Occasion:")
-recipient_name = st.text_input("Recipient's Name:")
-favorite_color = st.text_input("Recipient's Favorite Color:")
-relationship = st.text_input("Recipient's Relationship to you:")
+meal_type = st.text_input("Meal Type:")
+cuisune = st.text_input("Cuisine:")
+flavor_preferred = st.text_input("Flavor:")
 
 # Generate recommendation
 if st.button("Generate Recommendation"):
-    if occasion and recipient_name and favorite_color and relationship:
-        recommendation = generate_flower_recommendation(
-            occasion, recipient_name, favorite_color, relationship
+    if meal_type and cuisune and flavor_preferred:
+        recommendation = generate_cuisine_recommendation(
+            meal_type, cuisune, flavor_preferred
         )
-        st.success(f"Recommended Flower: {recommendation}")
+        st.success(f"Recommended Dish: {recommendation}")
     else:
         st.warning("Please fill in all fields.")
