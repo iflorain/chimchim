@@ -27,3 +27,36 @@ with st.sidebar:
         st.session_state.openai_api_key = openai_api_key
         openai.api_key = st.session_state.openai_api_key
         st.success("Your OpenAI API key was saved successfully!")
+
+# Set your OpenAI API key
+openai.api_key = 'YOUR_OPENAI_API_KEY'
+
+# Function to generate a food recommendation using OpenAI
+def generate_food_recommendation(cuisine):
+    prompt = f"I want to eat {cuisine} food, what should I choose?"
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=prompt,
+        temperature=0.7,
+        max_tokens=100,
+        n=1,
+    )
+    return response.choices[0].text.strip()
+
+# Streamlit app
+def main():
+    st.title("Food Recommendation App")
+
+    # User input for the desired cuisine
+    cuisine = st.text_input("Enter the cuisine you'd like to eat (e.g., Chinese, Italian, Japanese, etc.):")
+
+    if st.button("Generate Recommendation"):
+        if cuisine:
+            # Generate recommendation using OpenAI
+            recommendation = generate_food_recommendation(cuisine)
+            st.success(f"Based on {cuisine} cuisine, I recommend: {recommendation}")
+        else:
+            st.warning("Please enter a cuisine to get a recommendation.")
+
+if __name__ == "__main__":
+    main()
