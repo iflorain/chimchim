@@ -1,5 +1,5 @@
 import streamlit as st
-import openai
+#import openai
 # Uncomment the following lines to enable the API key input form
 # Initialize
 st.cache_data.clear()
@@ -31,9 +31,9 @@ with st.sidebar:
 #user_api_key = st.sidebar.text_input("OpenAI API key", type="password")
 #client = openai.OpenAI(api_key=user_api_key)
 
-def generate_flower_recommendation(occasion, recipient_name, favorite_color, relationship):
+def generate_flower_recommendation(cuisine, meal_type, flavor_preferred):
     # Customize the prompt based on your requirements
-    prompt = f"Recommend me a flower that are suitable for {occasion} and {favorite_color} for {recipient_name} who is my {relationship}. and write 5 notes for me to tell {recipient_name} why I chose this flower for this {occasion}."
+    prompt = f"I feel like having {meal_type} {cuisine} food with a {flavor_preferred} flavor. What dish do you recommend?. and write 3 notes for me why I chose this cuisine for this {meal_type}."
 
     # Call OpenAI API for recommendation
     response = openai.chat.completions.create(
@@ -42,8 +42,8 @@ def generate_flower_recommendation(occasion, recipient_name, favorite_color, rel
         top_p=0.7,
         max_tokens=450,
         messages=[
-            {"role": "system", "content": "You are a flowers recommendation bot. You will help users find the best flowers for their important person."},
-            {"role": "user", "content": f"You will help users find the best flowers and make notes from the context:{prompt}."},
+            {"role": "system", "content": "You are a cuisine recommendation bot. You will help users find the best dishes for their meal."},
+            {"role": "user", "content": f"You will help users find the best dishes and make notes from the context:{prompt}."},
         ]
     )
     
