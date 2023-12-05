@@ -1,14 +1,13 @@
 import streamlit as st
 import openai
-# Uncomment the following lines to enable the API key input form
-# Initialize
+
+
 st.cache_data.clear()
 
 if "openai_api_key" not in st.session_state:
     st.session_state.openai_api_key = ""
 
 openai.api_key = st.session_state.openai_api_key
-#openai.api_key = 'YOUR_OPENAI_API_KEY'
 
 if "text_error" not in st.session_state:
     st.session_state.text_error = None
@@ -29,8 +28,6 @@ with st.sidebar:
         openai.api_key = st.session_state.openai_api_key
         st.success("Your OpenAI API key was saved successfully!")
 
-#user_api_key = st.sidebar.text_input("OpenAI API key", type="password")
-#client = openai.OpenAI(api_key=user_api_key)
 
 def generate_cuisine_recommendation(cuisine, meal_type, flavor_preferred):
     # Customize the prompt based on your requirements
@@ -50,10 +47,10 @@ def generate_cuisine_recommendation(cuisine, meal_type, flavor_preferred):
     
     return response.choices[0].message.content
 
-#st.title("Dish For Today")
+st.title("Dish For Today")
 st.markdown("<h2 style = 'font-size: 1.8rem'>Dish For Today</h2>",unsafe_allow_html=True)
 
-# Uncomment the following lines to enable the API key input form
+
 
 
 # User input
