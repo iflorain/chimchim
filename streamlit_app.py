@@ -1,16 +1,6 @@
 import streamlit as st
 import openai
 
-#Init
-openai.api_key = 'YOUR_OPENAI_API_KEY'
-openai.api_base = "http://zanino.millenium.berkeley.edu:8000/v1"
-st.set_page_config(layout="wide")
-
-
-
-
-
-
 
 
 def generate_cuisine_recommendation(cuisine, meal_type, flavor_preferred):
