@@ -1,7 +1,10 @@
+
 import streamlit as st
 import openai
+import pandas as pd
 
-
+# Uncomment the following lines to enable the API key input form
+# Initialize
 st.cache_data.clear()
 
 if "openai_api_key" not in st.session_state:
@@ -28,43 +31,50 @@ with st.sidebar:
         openai.api_key = st.session_state.openai_api_key
         st.success("Your OpenAI API key was saved successfully!")
 
-
-def generate_cuisine_recommendation(cuisine, meal_type, flavor_preferred):
+def generate_flower_recommendation(occasion, recipient_name, favorite_color, relationship):
     # Customize the prompt based on your requirements
-    prompt = f"I feel like having {meal_type} {cuisine} food with a {flavor_preferred} flavor. What dish do you recommend?. and write 3 notes for me why I chose this cuisine for this {meal_type}."
-
+    #prompt1 = f"Recommend me a flower name that are suitable for {occasion} and {favorite_color} and {relationship} for {recipient_name} who is my {relationship}."
+    #prompt2 = f'write 5 different notes for me to tell {recipient_name} who is my {relationship} why I chose this flower for this {occasion}.'
+    prompt = f'Give me 2 recommended flowers that are suitable for {occasion} and {favorite_color} and {relationship} for {recipient_name} who is my {relationship}.and for each flowers write 3 different notes for me to tell {recipient_name} who is my {relationship} why I chose this flower for this {occasion}.'
     # Call OpenAI API for recommendation
     response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
-        temperature=0.7,
-        top_p=0.7,
+        temperature=0.8,
+        top_p=0.1,
         max_tokens=450,
         messages=[
-            {"role": "system", "content": "You are a cuisine recommendation bot. You will help users find the best dishes for their meal."},
-            {"role": "user", "content": f"You will help users find the best dishes and make notes from the context:{prompt}."},
+            {"role": "system", "content": f"You are a flowers recommendation bot. You will help users find the best flowers for their important person from the context{occasion} and {favorite_color} and {relationship}"},
+            {"role": "user", "content": f"You will help users find 2 flowers and make 3 different notes for each flowers from the context:{prompt}"},
         ]
     )
     
     return response.choices[0].message.content
 
-st.title("Dish For Today")
-st.markdown("<h2 style = 'font-size: 1.8rem'>Dish For Today</h2>",unsafe_allow_html=True)
+# Center the title
+st.markdown("<div style='text-align: center;'><h2 style='font-size: 2rem;'>🌼Flower For Your Important Person🌼</h2></div>", unsafe_allow_html=True)
 
-
+# Uncomment the following lines to enable the API key input form
 
 
 # User input
-meal_type = st.text_input("Meal Type:")
-cuisune = st.text_input("Cuisine:")
-flavor_preferred = st.text_input("Flavor:")
+occasion = st.text_input("Occasion:")
+recipient_name = st.text_input("Recipient's Name:")
+favorite_color = st.text_input("Recipient's Favorite Color:")
+relationship = st.text_input("Recipient's Relationship to you:")
 
 # Generate recommendation
 if st.button("Generate Recommendation"):
-    if meal_type and cuisune and flavor_preferred:
-        recommendation = generate_cuisine_recommendation(
-            meal_type, cuisune, flavor_preferred
+    if occasion and recipient_name and favorite_color and relationship:
+        recommendation = generate_flower_recommendation(
+            occasion, recipient_name, favorite_color, relationship
         )
-        st.success(f"Recommended Dish: {recommendation}")
+        st.success(f"{recommendation}")
     else:
         st.warning("Please fill in all fields.")
+        
+
+# Center the title
+st.markdown("<div style='text-align: center;'><h2 style='font-size: 1.5rem;'><i>“I must have flowers, always, and always.”</i></h2></div>", unsafe_allow_html=True)
+# Center the title
+st.markdown("<div style='text-align: center;'><h2 style='font-size: 1rem;'><i>— Claude Monet —</i></h2></div>", unsafe_allow_html=True)
 
