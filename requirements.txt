@@ -1,5 +1,5 @@
 streamlit == 1.28.0
-pandas
 streamlit-analytics
 numpy
-Import openai
+openai==0.27.0
+pandas==1.3.3
