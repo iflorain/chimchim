@@ -1,9 +1,11 @@
 import streamlit as st
 import os
-#import openai
+from openai import OpenAI
 
 # Setting the API key
-openai.api_key = os.environ['OPENAI_API_KEY']
+#openai.api_key = os.environ['OPENAI_API_KEY']
+user = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
 #os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 #import openai
 # Uncomment the following lines to enable the API key input form
