@@ -1,4 +1,8 @@
 import streamlit as st
+from streamlit import secrets
+
+# Set the OpenAI API key using Streamlit secrets
+openai.api_key = secrets["openai_api_key"]
 
 # Function to generate a food recommendation using OpenAI
 def generate_food_recommendation(cuisine, meal_type, flavor_preferred):
@@ -24,7 +28,7 @@ def main():
 
     if st.button("Submit"):
         # Check if the API key is correct (you may want to implement a more secure validation)
-        if api_key == "your_secret_api_key":
+        if api_key == "openai.api_key":
             st.success("API Key Verified! You have access to the app.")
 
             # User input
