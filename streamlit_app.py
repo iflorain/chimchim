@@ -35,7 +35,7 @@ def main():
 
     if st.button("Submit"):
         # Check if the API key is correct (you may want to implement a more secure validation)
-        if api_key == "your_secret_api_key":
+        if api_key == secrets["openai_api_key"]:
             st.success("API Key Verified! You have access to the app.")
             # User input
             meal_type = st.text_input("Meal Type:")
