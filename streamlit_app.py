@@ -1,47 +1,17 @@
 import streamlit as st
-import os
 import openai
 
+#Init
 openai.api_key = 'YOUR_OPENAI_API_KEY'
 openai.api_base = "http://zanino.millenium.berkeley.edu:8000/v1"
 st.set_page_config(layout="wide")
 
-# Setting the API key
-#openai.api_key = os.environ['OPENAI_API_KEY']
-#user = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
-#os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-#import openai
-# Uncomment the following lines to enable the API key input form
-# Initialize
-#st.cache_data.clear()
 
-#if "openai_api_key" not in st.session_state:
-    #st.session_state.openai_api_key = ""
 
-#openai.api_key = st.session_state.openai_api_key
 
-if "text_error" not in st.session_state:
-    st.session_state.text_error = None
 
-if "text" not in st.session_state:
-    st.session_state.text = None
 
-if "n_requests" not in st.session_state:
-    st.session_state.n_requests = 0
-
-with st.sidebar:
-    api_key_form = st.form(key="api_key_form")
-    openai_api_key = api_key_form.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
-    api_key_form_submitted = api_key_form.form_submit_button("Submit")
-
-    if api_key_form_submitted:
-        st.session_state.openai_api_key = openai_api_key
-        openai.api_key = st.session_state.openai_api_key
-        st.success("Your OpenAI API key was saved successfully!")
-
-#user_api_key = st.sidebar.text_input("OpenAI API key", type="password")
-#client = openai.OpenAI(api_key=user_api_key)
 
 def generate_cuisine_recommendation(cuisine, meal_type, flavor_preferred):
     # Customize the prompt based on your requirements
@@ -66,18 +36,32 @@ st.markdown("<h2 style = 'font-size: 1.8rem'>Dish For Today</h2>",unsafe_allow_h
 
 # Uncomment the following lines to enable the API key input form
 
+def main():
+    st.title("Dish For Today")
 
-# User input
-meal_type = st.text_input("Meal Type:")
-cuisune = st.text_input("Cuisine:")
-flavor_preferred = st.text_input("Flavor:")
+    # Ask for OpenAI API key as a password
+    api_key = st.text_input("Enter OpenAI API Key:", type="password")
+
+    if st.button("Submit"):
+        # Check if the API key is correct (you may want to implement a more secure validation)
+        if api_key == "your_secret_api_key":
+            st.success("API Key Verified! You have access to the app.")
+            # User input
+            meal_type = st.text_input("Meal Type:")
+            cuisune = st.text_input("Cuisine:")
+            flavor_preferred = st.text_input("Flavor:")
 
 # Generate recommendation
-if st.button("Generate Recommendation"):
-    if meal_type and cuisune and flavor_preferred:
-        recommendation = generate_cuisine_recommendation(
-            meal_type, cuisune, flavor_preferred
+            if st.button("Generate Recommendation"):
+                if meal_type and cuisune and flavor_preferred:
+                    recommendation = generate_cuisine_recommendation(
+                    meal_type, cuisune, flavor_preferred
         )
-        st.success(f"Recommended Dish: {recommendation}")
-    else:
-        st.warning("Please fill in all fields.")
+                    st.success(f"Recommended Dish: {recommendation}")
+                else:
+                    st.warning("Please fill in all fields.")
+        else:
+            st.error("Invalid API Key. Please enter the correct API key.")
+            
+if __name__ == "__main__":
+    main()
