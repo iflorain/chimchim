@@ -1,5 +1,4 @@
 import streamlit as st
-import openai
 
 # Function to generate a food recommendation using OpenAI
 def generate_food_recommendation(cuisine, meal_type, flavor_preferred):
