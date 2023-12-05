@@ -28,45 +28,45 @@ with st.sidebar:
         openai.api_key = st.session_state.openai_api_key
         st.success("Your OpenAI API key was saved successfully!")
 
+#user_api_key = st.sidebar.text_input("OpenAI API key", type="password")
+#client = openai.OpenAI(api_key=user_api_key)
 
-import pandas as pd
+def generate_flower_recommendation(occasion, recipient_name, favorite_color, relationship):
+    # Customize the prompt based on your requirements
+    prompt = f"Recommend me a flower that are suitable for {occasion} and {favorite_color} for {recipient_name} who is my {relationship}. and write 5 notes for me to tell {recipient_name} why I chose this flower for this {occasion}."
 
-# Set your OpenAI API key
-openai.api_key = 'YOUR_OPENAI_API_KEY'
-
-# Function to generate a food recommendation using OpenAI
-def generate_food_recommendation(cuisine):
-    prompt = f"I want to eat {cuisine} food, what should I choose?"
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
+    # Call OpenAI API for recommendation
+    response = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
         temperature=0.7,
-        max_tokens=100,
-        n=1,
+        top_p=0.7,
+        max_tokens=450,
+        messages=[
+            {"role": "system", "content": "You are a flowers recommendation bot. You will help users find the best flowers for their important person."},
+            {"role": "user", "content": f"You will help users find the best flowers and make notes from the context:{prompt}."},
+        ]
     )
-    return response.choices[0].text.strip()
+    
+    return response.choices[0].message.content
 
-# Streamlit app
-def main():
-    st.title("Food Recommendation App")
+#st.title("🌼Flower For Your Important Person🌼")
+st.markdown("<h2 style = 'font-size: 1.8rem'>🌼Flower For Your Important Person🌼</h2>",unsafe_allow_html=True)
 
-    # User input for the desired cuisine
-    cuisine = st.text_input("Enter the cuisine you'd like to eat (e.g., Chinese, Italian, Japanese, etc.):")
+# Uncomment the following lines to enable the API key input form
 
-    if st.button("Generate Recommendation"):
-        if cuisine:
-            # Generate recommendation using OpenAI
-            recommendation = generate_food_recommendation(cuisine)
 
-            # Create a Pandas DataFrame for the recommendation
-            data = {'Cuisine': [cuisine], 'Recommendation': [recommendation]}
-            df = pd.DataFrame(data)
+# User input
+occasion = st.text_input("Occasion:")
+recipient_name = st.text_input("Recipient's Name:")
+favorite_color = st.text_input("Recipient's Favorite Color:")
+relationship = st.text_input("Recipient's Relationship to you:")
 
-            # Display the recommendation in a table
-            st.table(df)
-        else:
-            st.warning("Please enter a cuisine to get a recommendation.")
-
-if __name__ == "__main__":
-    main()
-
+# Generate recommendation
+if st.button("Generate Recommendation"):
+    if occasion and recipient_name and favorite_color and relationship:
+        recommendation = generate_flower_recommendation(
+            occasion, recipient_name, favorite_color, relationship
+        )
+        st.success(f"Recommended Flower: {recommendation}")
+    else:
+        st.warning("Please fill in all fields.")
