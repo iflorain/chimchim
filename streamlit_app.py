@@ -29,7 +29,7 @@ with st.sidebar:
         st.success("Your OpenAI API key was saved successfully!")
 
 # Set your OpenAI API key
-openai.api_key = 'YOUR_OPENAI_API_KEY'
+#openai.api_key = 'YOUR_OPENAI_API_KEY'
 
 # Function to generate a food recommendation using OpenAI
 def generate_food_recommendation(cuisine):
