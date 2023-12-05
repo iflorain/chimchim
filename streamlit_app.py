@@ -28,8 +28,11 @@ with st.sidebar:
         openai.api_key = st.session_state.openai_api_key
         st.success("Your OpenAI API key was saved successfully!")
 
+
+import pandas as pd
+
 # Set your OpenAI API key
-#openai.api_key = 'YOUR_OPENAI_API_KEY'
+openai.api_key = 'YOUR_OPENAI_API_KEY'
 
 # Function to generate a food recommendation using OpenAI
 def generate_food_recommendation(cuisine):
@@ -54,9 +57,16 @@ def main():
         if cuisine:
             # Generate recommendation using OpenAI
             recommendation = generate_food_recommendation(cuisine)
-            st.success(f"Based on {cuisine} cuisine, I recommend: {recommendation}")
+
+            # Create a Pandas DataFrame for the recommendation
+            data = {'Cuisine': [cuisine], 'Recommendation': [recommendation]}
+            df = pd.DataFrame(data)
+
+            # Display the recommendation in a table
+            st.table(df)
         else:
             st.warning("Please enter a cuisine to get a recommendation.")
 
 if __name__ == "__main__":
     main()
+
