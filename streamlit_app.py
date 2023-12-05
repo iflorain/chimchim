@@ -7,7 +7,7 @@ st.cache_data.clear()
 if "openai_api_key" not in st.session_state:
     st.session_state.openai_api_key = ""
 
-#openai.api_key = st.session_state.openai_api_key
+openai.api_key = st.session_state.openai_api_key
 #openai.api_key = 'YOUR_OPENAI_API_KEY'
 
 if "text_error" not in st.session_state:
