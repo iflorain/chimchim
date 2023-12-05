@@ -1,4 +1,3 @@
-pip install openai
 import streamlit as st
 import openai
 # Uncomment the following lines to enable the API key input form
