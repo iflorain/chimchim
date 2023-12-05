@@ -2,6 +2,10 @@ import streamlit as st
 import os
 import openai
 
+openai.api_key = 'YOUR_OPENAI_API_KEY'
+openai.api_base = "http://zanino.millenium.berkeley.edu:8000/v1"
+st.set_page_config(layout="wide")
+
 # Setting the API key
 #openai.api_key = os.environ['OPENAI_API_KEY']
 #user = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
@@ -16,9 +20,6 @@ import openai
     #st.session_state.openai_api_key = ""
 
 #openai.api_key = st.session_state.openai_api_key
-openai.api_key = 'YOUR_OPENAI_API_KEY'
-openai.api_base = "http://zanino.millenium.berkeley.edu:8000/v1"
-st.set_page_config(layout="wide")
 
 if "text_error" not in st.session_state:
     st.session_state.text_error = None
